@@ -41,10 +41,16 @@ class Log(db.Model):
     date = db.Column(db.Date, nullable=False)
     hours = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    proof_path = db.Column(db.String(500)) # Optional file path
     is_approved = db.Column(db.Boolean, default=False, nullable=False) # Added for Mentor Approval
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     project = db.relationship('Project', backref=db.backref('logs', lazy=True))
+    proof = db.relationship('Proof', backref=db.backref('log', lazy=True), uselist=False)
+
+class Proof(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    log_id = db.Column(db.Integer, db.ForeignKey('log.id'), nullable=False)
+    file_path = db.Column(db.String(500))
+    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 # --- Helpers ---
 def current_user():
@@ -138,21 +144,23 @@ def project_detail(project_id):
             return redirect(url_for('project_detail', project_id=project.id))
             
         file = request.files.get('proof_file')
-        proof_path = None
+        log = Log(
+            date=datetime.strptime(request.form['date'], '%Y-%m-%d').date(),
+            hours=float(request.form['hours']),
+            description=request.form['description'],
+            project_id=project.id
+        )
+        db.session.add(log)
+
         if file and file.filename:
             filename = secure_filename(file.filename)
             unique_filename = f"{datetime.now().timestamp()}_{filename}"
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
             proof_path = f"proofs/{unique_filename}"
+            
+            proof = Proof(log=log, file_path=proof_path)
+            db.session.add(proof)
 
-        log = Log(
-            date=datetime.strptime(request.form['date'], '%Y-%m-%d').date(),
-            hours=float(request.form['hours']),
-            description=request.form['description'],
-            proof_path=proof_path,
-            project_id=project.id
-        )
-        db.session.add(log)
         db.session.commit()
         return redirect(url_for('project_detail', project_id=project.id))
 

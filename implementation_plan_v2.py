@@ -32,10 +32,16 @@ class Log(db.Model):
     date = db.Column(db.Date, nullable=False)
     hours = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
-    proof_path = db.Column(db.String(500)) # Optional file path
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     project = db.relationship('Project', backref=db.backref('logs', lazy=True))
+    proof = db.relationship('Proof', backref='log', uselist=False)
+
+class Proof(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    log_id = db.Column(db.Integer, db.ForeignKey('log.id'), nullable=False)
+    file_path = db.Column(db.String(500))
+    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 # --- Helpers ---
 def current_user():

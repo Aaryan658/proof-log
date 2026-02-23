@@ -73,8 +73,8 @@
                 <p style="margin: 0.5rem 0;">{{ log.description }}</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        {% if log.proof_path %}
-                        <a href="{{ url_for('media', filename=log.proof_path) }}" target="_blank"
+                        {% if log.proof %}
+                        <a href="{{ url_for('media', filename=log.proof.file_path) }}" target="_blank"
                             style="font-size: 0.9rem; color: #2563eb;">View Proof Attachment</a>
                         {% endif %}
                     </div>
