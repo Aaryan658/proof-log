@@ -5,7 +5,7 @@ ProofLog is a simple web application that allows users to create projects and lo
 ## Privacy & Access Control
 - **Private by Default**: All projects and logs are private to the user who created them.
 - **Authentication Required**: Users must register and login to access the system.
-- **Validation**: This is an MVP academic project. Logs are **self-reported** and not currently validated by external reviewers (mentors/teachers). Validated reviewer roles are a planned future extension.
+- **Mentorship Verification**: Mentors can view all intern logs and explicitly approve or revoke them. Only approved logs count towards an intern's total project hours.
 
 ## Tech Stack
 - **Backend**: Flask (SQLAlchemy, WTForms)
@@ -24,6 +24,8 @@ ProofLog is a simple web application that allows users to create projects and lo
 
 ## How to use
 1. **Register** a new account.
-2. **Login** to access your private dashboard.
-3. **Create Projects** (Visible only to you).
-4. **Log Work** inside a project.
+   - To register as an **Intern**, your email must end with `@intern.com` (e.g., `student@intern.com`).
+   - To register as a **Mentor**, your email must end with `@mentor.com` (e.g., `faculty@mentor.com`).
+2. **Login** to access your dashboard.
+3. **Interns**: Create Projects, log daily work, and optionally upload proof screenshots.
+4. **Mentors**: View all assigned intern projects, and click "Approve Log" to verify intern hours. Total hours are only calculated based on explicitly approved logs!
