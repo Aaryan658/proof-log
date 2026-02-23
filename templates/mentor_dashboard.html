@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mentor Dashboard | ProofLog</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>ProofLog <span style="font-size: 1rem; color: #666; font-weight: normal;">(Mentor View)</span></h1>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <span>{{ user.email }} ({{ user.role }})</span>
+                <a href="/logout" class="button secondary"
+                    style="padding: 0.5rem 1rem; border: 1px solid #ccc; border-radius: 4px; text-decoration: none; color: inherit;">Logout</a>
+            </div>
+        </header>
+
+        <h2>Assigned Intern Projects</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            {% set total_hours = project.approved_hours %}
+            {% set last_log = project.logs|sort(attribute='date')|last %}
+
+            <div class="project-card">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <h3 style="margin: 0;">{{ project.name }}</h3>
+                    <span
+                        style="background: #ecfdf5; color: #047857; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 500;">
+                        Intern: {{ project.user.email }}
+                    </span>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">{{ project.description }}
+                </p>
+
+                <div
+                    style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #4b5563; margin-top: auto; border-top: 1px solid #eee; padding-top: 0.75rem;">
+                    <div>
+                        <strong>Approved Hours:</strong> <span style="color: #047857; font-weight: 500;">{{
+                            project.approved_hours }}</span>
+                        {% if project.pending_hours > 0 %}
+                        <span style="font-size: 0.75rem; color: #d97706; margin-left: 0.25rem;">(+{{
+                            project.pending_hours }} pending)</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <strong>Last Log:</strong> {{ last_log.date if last_log else 'Never' }}
+                    </div>
+                </div>
+
+                <a href="{{ url_for('project_detail', project_id=project.id) }}" class="button primary"
+                    style="display: block; text-align: center; margin-top: 1rem;">
+                    View Logs & Proofs
+                </a>
+            </div>
+            {% else %}
+            <p>No intern projects found.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

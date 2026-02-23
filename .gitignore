@@ -1,0 +1,26 @@
+# Virtual Environments
+venv/
+env/
+.env
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Application Data
+instance/
+*.sqlite3
+*.db
+
+# Uploaded Media / Proofs
+media/
+!media/.gitkeep
+media/proofs/*
+!media/proofs/.gitkeep
+
+# IDEs and Tools
+.vscode/
+.idea/
+.gemini/

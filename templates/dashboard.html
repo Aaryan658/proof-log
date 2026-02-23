@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>ProofLog</h1>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <span>{{ user.email }}</span>
+                <a href="/logout" class="button secondary"
+                    style="padding: 0.5rem 1rem; border: 1px solid #ccc; border-radius: 4px; text-decoration: none; color: inherit;">Logout</a>
+            </div>
+        </header>
+
+        <div class="card">
+            <h2>Create New Project</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label>Project Name</label>
+                    <input type="text" name="name" required
+                        style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="3"
+                        style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius);"></textarea>
+                </div>
+                <button type="submit">Create Project</button>
+            </form>
+        </div>
+
+        <h2>My Projects</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                <h3><a href="{{ url_for('project_detail', project_id=project.id) }}"
+                        style="text-decoration: none; color: inherit;">{{ project.name }}</a></h3>
+                <p style="color: var(--text-muted);">{{ project.description }}</p>
+                <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #4b5563;">
+                    <strong>Approved Hours:</strong> <span style="color: #047857; font-weight: 500;">{{
+                        project.approved_hours }}</span>
+                    {% if project.pending_hours > 0 %}
+                    <span style="color: #d97706; margin-left: 0.5rem;">({{ project.pending_hours }} pending)</span>
+                    {% endif %}
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                    <small style="color: var(--text-muted);">Created: {{ project.created_at.strftime('%Y-%m-%d') if
+                        project.created_at else 'N/A' }}</small>
+                    <a href="{{ url_for('project_detail', project_id=project.id) }}" class="button secondary"
+                        style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">View</a>
+                </div>
+            </div>
+            {% else %}
+            <p>No projects yet. Start by creating one!</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

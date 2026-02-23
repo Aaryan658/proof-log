@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="container" style="max-width: 400px; margin-top: 5rem;">
+        <div class="card">
+            <h1 style="text-align: center;">Welcome Back</h1>
+
+            {% if error %}
+            <div
+                style="background-color: #fee2e2; color: #ef4444; padding: 1rem; border-radius: 4px; margin-bottom: 1rem; text-align: center;">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="post">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required placeholder="name@intern.com or name@mentor.com"
+                        style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required
+                        style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                </div>
+                <button type="submit" style="width: 100%;">Login</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 1rem;">
+                No account? <a href="/register">Register</a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
