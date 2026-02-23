@@ -2,13 +2,13 @@
 
 ## Entities
 
-### 1. User (Django Built-in)
+### 1. User
 | Attribute | Type | Constraints |
 |-----------|------|-------------|
 | id | Integer | PK, Auto Increment |
-| username | String | Unique, Not Null |
+| email | String | Unique, Not Null |
 | password | String | Not Null (Hashed) |
-| email | String | Optional |
+| role | String | default='intern' |
 
 ### 2. Project
 | Attribute | Type | Constraints |
@@ -25,16 +25,16 @@
 | id | Integer | PK, Auto Increment |
 | project_id | Integer | FK -> Project.id |
 | date | Date | Not Null |
-| duration | Float | Positive, Hrs |
+| hours | Float | Positive |
 | description | Text | Not Null |
-| created_at | DateTime | Auto Now Add |
+| is_approved | Boolean | Default False |
 
 ### 4. Proof
 | Attribute | Type | Constraints |
 |-----------|------|-------------|
 | id | Integer | PK, Auto Increment |
 | log_id | Integer | FK -> Log.id |
-| file | FileField | Local Storage Path |
+| file_path | String(500) | Local Storage Path |
 | uploaded_at | DateTime | Auto Now Add |
 
 ## Relationships
@@ -61,8 +61,9 @@ erDiagram
 
     User {
         int id PK
-        string username
         string email
+        string password
+        string role
     }
 
     Project {
@@ -77,14 +78,15 @@ erDiagram
         int id PK
         int project_id FK
         date date
-        float duration
+        float hours
         text description
+        boolean is_approved
     }
 
     Proof {
         int id PK
         int log_id FK
-        file content
+        string file_path
         datetime uploaded_at
     }
 ```
