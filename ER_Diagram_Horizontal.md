@@ -16,20 +16,20 @@ flowchart LR
     R_has{Has}
 
     %% User Attributes (Ovals)
-    A_U_id([<u>id</u>])
+    A_U_id(["<u>id</u>"])
     A_U_email([email])
     A_U_pass([password])
     A_U_role([role])
 
     %% Project Attributes (Ovals)
-    A_P_id([<u>id</u>])
+    A_P_id(["<u>id</u>"])
     A_P_uid([user_id])
     A_P_name([name])
     A_P_desc([description])
     A_P_created([created_at])
 
     %% Log Attributes (Ovals)
-    A_L_id([<u>id</u>])
+    A_L_id(["<u>id</u>"])
     A_L_pid([project_id])
     A_L_date([date])
     A_L_hours([hours])
@@ -37,7 +37,7 @@ flowchart LR
     A_L_approv([is_approved])
 
     %% Proof Attributes (Ovals)
-    A_Pr_id([<u>id</u>])
+    A_Pr_id(["<u>id</u>"])
     A_Pr_lid([log_id])
     A_Pr_path([file_path])
     A_Pr_up([uploaded_at])
