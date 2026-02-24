@@ -1,15 +1,79 @@
 # Horizontal ER Diagram for ProofLog
 
-This is a horizontal representation of the ProofLog Entity-Relationship (ER) diagram, structured from left to right for easier reading in landscape formats.
+This is a representation of the ProofLog Entity-Relationship (ER) diagram using standard ER notation: Rectangles for Entities (Tables), Diamonds for Relationships, and Ovals for Attributes (underlined for Primary Keys).
 
 ```mermaid
 flowchart LR
-    User["<b>User</b><hr>id (PK)<br>email<br>password<br>role"]
-    Project["<b>Project</b><hr>id (PK)<br>user_id (FK)<br>name<br>description<br>created_at"]
-    Log["<b>Log</b><hr>id (PK)<br>project_id (FK)<br>date<br>hours<br>description<br>is_approved"]
-    Proof["<b>Proof</b><hr>id (PK)<br>log_id (FK)<br>file_path<br>uploaded_at"]
+    %% Entities (Rectangles)
+    E_User[User]
+    E_Project[Project]
+    E_Log[Log]
+    E_Proof[Proof]
 
-    User -- "1 : N<br>owns" --> Project
-    Project -- "1 : N<br>contains" --> Log
-    Log -- "1 : 0..1<br>has_evidence" --> Proof
+    %% Relationships (Diamonds)
+    R_owns{Owns}
+    R_contains{Contains}
+    R_has{Has}
+
+    %% User Attributes (Ovals)
+    A_U_id([<u>id</u>])
+    A_U_email([email])
+    A_U_pass([password])
+    A_U_role([role])
+
+    %% Project Attributes (Ovals)
+    A_P_id([<u>id</u>])
+    A_P_uid([user_id])
+    A_P_name([name])
+    A_P_desc([description])
+    A_P_created([created_at])
+
+    %% Log Attributes (Ovals)
+    A_L_id([<u>id</u>])
+    A_L_pid([project_id])
+    A_L_date([date])
+    A_L_hours([hours])
+    A_L_desc([description])
+    A_L_approv([is_approved])
+
+    %% Proof Attributes (Ovals)
+    A_Pr_id([<u>id</u>])
+    A_Pr_lid([log_id])
+    A_Pr_path([file_path])
+    A_Pr_up([uploaded_at])
+
+    %% Connect Attributes to Entities
+    A_U_id --- E_User
+    E_User --- A_U_email
+    E_User --- A_U_pass
+    E_User --- A_U_role
+
+    A_P_id --- E_Project
+    E_Project --- A_P_uid
+    E_Project --- A_P_name
+    E_Project --- A_P_desc
+    E_Project --- A_P_created
+
+    A_L_id --- E_Log
+    E_Log --- A_L_pid
+    E_Log --- A_L_date
+    E_Log --- A_L_hours
+    E_Log --- A_L_desc
+    E_Log --- A_L_approv
+
+    A_Pr_id --- E_Proof
+    E_Proof --- A_Pr_lid
+    E_Proof --- A_Pr_path
+    E_Proof --- A_Pr_up
+
+    %% Connect Entities through Relationships
+    E_User ---|1| R_owns
+    R_owns ---|N| E_Project
+
+    E_Project ---|1| R_contains
+    R_contains ---|N| E_Log
+
+    E_Log ---|1| R_has
+    R_has ---|0..1| E_Proof
 ```
+
