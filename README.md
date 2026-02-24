@@ -29,3 +29,20 @@ ProofLog is a simple web application that allows users to create projects and lo
 2. **Login** to access your dashboard.
 3. **Interns**: Create Projects, log daily work, and optionally upload proof screenshots.
 4. **Mentors**: View all assigned intern projects, and click "Approve Log" to verify intern hours. Total hours are only calculated based on explicitly approved logs!
+
+## Database Management
+The SQLite database is stored in the `instance/` folder. To query it using the terminal:
+
+1. Open the interactive prompt:
+   ```bash
+   sqlite3 instance/app.db
+   ```
+2. For readable, table-formatted output, run these commands inside the prompt:
+   ```sqlite
+   .headers on
+   .mode column
+   ```
+3. Run your SQL queries (e.g., `SELECT * FROM user;`) and type `.quit` to exit.
+
+## Recent Updates
+- **CSS Formatting**: Replaced the non-standard `ring` property in `static/styles.css` with a valid `box-shadow: 0 0 0 2px var(--primary)` approach to fix IDE warnings and ensure cross-browser compatibility for input focus states.
